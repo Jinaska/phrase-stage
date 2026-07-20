@@ -194,6 +194,16 @@
       </div>
     </div>
 
+    <div class="card" id="reviewCard">
+      <h2>🔥 復習ステージ(苦手フレーズ)</h2>
+      <div id="reviewInfo" style="font-size:.85rem;color:var(--muted);margin-bottom:12px;line-height:1.7;"></div>
+      <div class="type-actions" style="margin-top:0;justify-content:flex-start;">
+        <button class="btn small" data-rmode="e2j">🇬🇧→🇯🇵 4択</button>
+        <button class="btn small" data-rmode="j2e">🇯🇵→🇬🇧 4択</button>
+        <button class="btn small" data-rmode="type">⌨️ タイピング</button>
+      </div>
+    </div>
+
     <div class="card" id="bestCard">
       <h2>🏆 ベストスコア</h2>
       <div id="bestScores" style="font-size:.85rem;color:var(--muted);line-height:2;"></div>
@@ -270,6 +280,7 @@
       <div class="rank" id="rRank"></div>
       <div class="rank-msg" id="rMsg"></div>
       <div class="center" style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn hidden" id="rWrongRetry">🔥 まちがえた問題だけリベンジ</button>
         <button class="btn" id="rRetry">🔁 もう一回</button>
         <button class="btn ghost" onclick="goHome()">🏠 ホーム</button>
       </div>
@@ -385,6 +396,14 @@ const store = {
   get(k){ try{ return localStorage.getItem(k); }catch(e){ return this._m && this._m[k]; } },
   set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ (this._m=this._m||{})[k]=v; } }
 };
+
+/* ---- 苦手フレーズ(まちがえた問題)の記録 ---- */
+let wrongs = {};
+try{ wrongs = JSON.parse(store.get("wrongs")||"{}") || {}; }catch(e){ wrongs = {}; }
+function saveWrongs(){ store.set("wrongs", JSON.stringify(wrongs)); }
+function addWrong(item){ wrongs[item.en]=(wrongs[item.en]||0)+1; saveWrongs(); }
+function clearWrong(item){ if(wrongs[item.en]){ delete wrongs[item.en]; saveWrongs(); } }
+function wrongItems(){ return P.filter(p=>wrongs[p.en]); }
 
 /* speech */
 let voices=[];
@@ -534,7 +553,20 @@ function buildHome(){
   document.querySelectorAll(".mode-btn").forEach(b=>{
     b.onclick=()=>{ ac(); startMode(b.dataset.mode); };
   });
-  updatePoolInfo(); renderBest();
+  document.querySelectorAll("[data-rmode]").forEach(b=>{
+    b.onclick=()=>{ ac(); startReview(b.dataset.rmode); };
+  });
+  updatePoolInfo(); renderBest(); renderReview();
+}
+function renderReview(){
+  const items = wrongItems();
+  const info = $("#reviewInfo");
+  if(!items.length){
+    info.innerHTML = "いま苦手フレーズは <b>0個</b>!全部マスターしてる状態だよ👑<br>クイズやタイピングでまちがえた問題は、自動でここに貯まっていくよ。";
+  }else{
+    const preview = items.slice(0,3).map(p=>p.en).join(" / ");
+    info.innerHTML = `いま苦手フレーズが <b style="color:var(--gold);">${items.length}個</b> 貯まってるよ🔥(例: ${preview}${items.length>3?" …":""})<br>復習で正解すればリストから消えるよ。全部消してマスターしよう💜`;
+  }
 }
 function renderBest(){
   const names={e2j:"英→日 4択",j2e:"日→英 4択",type:"タイピング"};
@@ -550,15 +582,23 @@ function show(id){
   $("#"+id).classList.remove("hidden");
   window.scrollTo({top:0});
 }
-function goHome(){ if(window.speechSynthesis) speechSynthesis.cancel(); show("home"); renderBest(); }
+function goHome(){ if(window.speechSynthesis) speechSynthesis.cancel(); show("home"); renderBest(); renderReview(); }
 
 /* ================= SESSION ================= */
+function startSession(mode, items){
+  session = { mode, items, i:0, score:0, combo:0, maxCombo:0, wrong:[], hintUsed:false };
+  if(mode==="type"){ show("typing"); nextType(); } else { show("quiz"); nextQuiz(); }
+}
 function startMode(mode){
   if(mode==="list"){ buildList(); show("list"); return; }
   const p = shuffle(pool());
   const n = numQ==="all" ? p.length : Math.min(parseInt(numQ), p.length);
-  session = { mode, items:p.slice(0,n), i:0, score:0, combo:0, maxCombo:0, wrong:[], hintUsed:false };
-  if(mode==="type"){ show("typing"); nextType(); } else { show("quiz"); nextQuiz(); }
+  startSession(mode, p.slice(0,n));
+}
+function startReview(mode){
+  const items = wrongItems();
+  if(!items.length){ showToast("苦手フレーズはゼロ!すごい💜"); return; }
+  startSession(mode, shuffle(items));
 }
 function hud(pre){
   const s=session;
@@ -606,12 +646,13 @@ function answerQuiz(btn, ok, item, isE2J){
   });
   if(ok){
     s.score++; s.combo++; s.maxCombo=Math.max(s.maxCombo,s.combo);
+    clearWrong(item);
     $("#qFb").textContent = CHEERS[Math.floor(Math.random()*CHEERS.length)];
     $("#qFb").style.color="var(--ok)";
     sndOK(s.combo); comboFx(s.combo);
   }else{
     btn.classList.add("wrong");
-    s.combo=0; s.wrong.push(item);
+    s.combo=0; s.wrong.push(item); addWrong(item);
     $("#qFb").textContent="ドンマイ!💜 正解は → "+item[isE2J?"ja":"en"];
     $("#qFb").style.color="var(--ng)";
     sndNG();
@@ -650,11 +691,12 @@ function checkType(){
   const ok=isTypedCorrect(val,item);
   if(ok){
     s.score++; s.combo++; s.maxCombo=Math.max(s.maxCombo,s.combo);
+    clearWrong(item);
     $("#tFb").textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)]+"  → "+item.en;
     $("#tFb").style.color="var(--ok)";
     sndOK(s.combo); comboFx(s.combo);
   }else{
-    s.combo=0; s.wrong.push(item);
+    s.combo=0; s.wrong.push(item); addWrong(item);
     $("#tFb").textContent="正解は → "+item.en;
     $("#tFb").style.color="var(--ng)";
     sndNG();
@@ -700,9 +742,14 @@ function finish(){
   const bk="best_"+s.mode, prev=parseInt(store.get(bk)||"-1");
   if(pct>prev){ store.set(bk,String(pct)); $("#rMsg").innerHTML+="<br>🎉 ベストスコア更新!"; }
   const rv=$("#rReview"); rv.innerHTML="";
-  if(s.wrong.length){
+  const wrongNow=[...s.wrong];
+  if(wrongNow.length){
     rv.innerHTML="<h2>📚 まちがえたフレーズ(復習しよう)</h2>";
-    s.wrong.forEach(p=>rv.appendChild(row(p)));
+    wrongNow.forEach(p=>rv.appendChild(row(p)));
+    $("#rWrongRetry").classList.remove("hidden");
+    $("#rWrongRetry").onclick=()=>startSession(s.mode==="list"?"e2j":s.mode, shuffle(wrongNow));
+  }else{
+    $("#rWrongRetry").classList.add("hidden");
   }
   show("result");
   sndFanfare();
@@ -718,6 +765,7 @@ function row(p){
   d.innerHTML=`<span class="num">${p.id==="+"?"＋":p.id}</span>
     <div class="txt"><div class="en"></div><div class="ja"></div>${p.n?'<div class="nt"></div>':""}</div>`;
   d.querySelector(".en").textContent=p.en;
+  if(wrongs[p.en]) d.querySelector(".en").insertAdjacentHTML("beforeend"," <span title='苦手リスト入り' style='font-size:.75rem;'>🔥</span>");
   d.querySelector(".ja").textContent=p.ja;
   if(p.n) d.querySelector(".nt").textContent="📝 "+p.n;
   const b=document.createElement("button");
