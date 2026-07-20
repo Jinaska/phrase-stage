@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHRASE STAGE 💜 | Vintage Idioms 1051–1113</title>
+<style>
+  :root{
+    --bg1:#12081f; --bg2:#2b1055; --bg3:#4b1e78;
+    --purple:#a78bfa; --purple2:#8b5cf6; --pink:#f472b6; --gold:#fbbf24;
+    --ok:#34d399; --ng:#fb7185;
+    --card:rgba(255,255,255,.07); --card2:rgba(255,255,255,.12);
+    --text:#f5f3ff; --muted:#c4b5fd;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+    background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,var(--bg3) 100%);
+    background-attachment:fixed;
+    color:var(--text); min-height:100vh; overflow-x:hidden;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 80px;position:relative;}
+  /* ---------- header ---------- */
+  header{text-align:center;padding:18px 0 8px;}
+  .logo{
+    font-size:clamp(1.9rem,6vw,2.8rem);font-weight:900;letter-spacing:.06em;
+    background:linear-gradient(90deg,#c084fc,#f472b6,#fbbf24,#c084fc);
+    background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 6s linear infinite;
+  }
+  @keyframes shine{to{background-position:300% 0;}}
+  .tagline{color:var(--muted);font-size:.85rem;margin-top:6px;}
+  .lightsticks{font-size:1.1rem;letter-spacing:.4em;margin-top:4px;animation:sway 2.6s ease-in-out infinite;}
+  @keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  /* ---------- cards / buttons ---------- */
+  .card{background:var(--card);border:1px solid rgba(167,139,250,.25);border-radius:18px;padding:18px;margin-top:16px;backdrop-filter:blur(6px);}
+  h2{font-size:1.05rem;color:var(--purple);margin-bottom:12px;}
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:520px){.modes{grid-template-columns:1fr;}}
+  .mode-btn{
+    display:flex;flex-direction:column;gap:6px;align-items:flex-start;
+    background:var(--card2);border:1px solid rgba(167,139,250,.35);border-radius:16px;
+    padding:16px;cursor:pointer;color:var(--text);text-align:left;font-family:inherit;
+    transition:transform .15s,box-shadow .15s,border-color .15s;
+  }
+  .mode-btn:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:0 8px 24px rgba(139,92,246,.35);}
+  .mode-btn .mi{font-size:1.6rem;}
+  .mode-btn .mt{font-weight:800;font-size:1.02rem;}
+  .mode-btn .md{font-size:.78rem;color:var(--muted);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    border:1px solid rgba(167,139,250,.4);background:transparent;color:var(--muted);
+    border-radius:999px;padding:7px 14px;font-size:.8rem;cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .chip.on{background:var(--purple2);color:#fff;border-color:var(--purple2);font-weight:700;}
+  .btn{
+    display:inline-block;border:none;border-radius:999px;padding:13px 26px;cursor:pointer;
+    font-family:inherit;font-weight:800;font-size:1rem;color:#fff;
+    background:linear-gradient(90deg,var(--purple2),var(--pink));
+    box-shadow:0 6px 18px rgba(139,92,246,.4);transition:transform .15s;
+  }
+  .btn:hover{transform:scale(1.04);}
+  .btn.ghost{background:transparent;border:1.5px solid var(--purple);color:var(--purple);box-shadow:none;}
+  .btn.small{padding:8px 16px;font-size:.85rem;}
+  .center{text-align:center;}
+  .hidden{display:none !important;}
+  /* ---------- quiz ---------- */
+  .hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;font-size:.85rem;color:var(--muted);}
+  .combo-box{font-weight:800;color:var(--gold);min-height:1.2em;}
+  .bar{height:8px;background:rgba(255,255,255,.12);border-radius:99px;margin-top:8px;overflow:hidden;}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple2),var(--pink));border-radius:99px;transition:width .3s;}
+  .q-word{
+    font-size:clamp(1.3rem,5vw,2rem);font-weight:900;text-align:center;margin:22px 6px 4px;line-height:1.4;
+  }
+  .q-sub{text-align:center;color:var(--muted);font-size:.8rem;min-height:1.2em;}
+  .opts{display:grid;gap:10px;margin-top:18px;}
+  .opt{
+    background:var(--card2);border:1.5px solid rgba(167,139,250,.3);border-radius:14px;
+    padding:14px 16px;font-size:1rem;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;
+    transition:.15s;line-height:1.45;
+  }
+  .opt:hover{border-color:var(--purple);}
+  .opt.correct{background:rgba(52,211,153,.2);border-color:var(--ok);font-weight:700;}
+  .opt.wrong{background:rgba(251,113,133,.2);border-color:var(--ng);}
+  .opt:disabled{cursor:default;opacity:.92;}
+  .feedback{text-align:center;font-size:1.15rem;font-weight:900;min-height:1.6em;margin-top:14px;}
+  .note-line{text-align:center;color:var(--muted);font-size:.82rem;margin-top:4px;min-height:1.1em;}
+  /* ---------- typing ---------- */
+  .type-input{
+    width:100%;margin-top:18px;padding:14px 16px;border-radius:14px;font-size:1.05rem;font-family:inherit;
+    border:1.5px solid rgba(167,139,250,.45);background:rgba(255,255,255,.1);color:var(--text);outline:none;
+  }
+  .type-input:focus{border-color:var(--pink);}
+  .type-actions{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+  /* ---------- list ---------- */
+  .search{width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid rgba(167,139,250,.4);background:rgba(255,255,255,.08);color:var(--text);font-family:inherit;font-size:.95rem;outline:none;margin-bottom:12px;}
+  .cat-title{margin:18px 0 8px;color:var(--pink);font-size:.9rem;font-weight:800;}
+  .p-row{
+    display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid rgba(167,139,250,.2);
+    border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  }
+  .p-row .num{font-size:.7rem;color:var(--muted);min-width:2.6em;}
+  .p-row .txt{flex:1;}
+  .p-row .en{font-weight:800;font-size:.98rem;}
+  .p-row .ja{font-size:.85rem;color:var(--muted);margin-top:2px;}
+  .p-row .nt{font-size:.72rem;color:#9d8bd8;margin-top:2px;}
+  .speak{
+    border:none;background:var(--purple2);color:#fff;border-radius:50%;width:38px;height:38px;min-width:38px;
+    font-size:1rem;cursor:pointer;transition:.15s;
+  }
+  .speak:hover{transform:scale(1.1);background:var(--pink);}
+  .speak.playing{background:var(--gold);animation:pulse .6s infinite alternate;}
+  @keyframes pulse{to{transform:scale(1.15);}}
+  /* ---------- result ---------- */
+  .score-big{font-size:3rem;font-weight:900;text-align:center;color:var(--gold);}
+  .rank{text-align:center;font-size:1.3rem;font-weight:900;margin-top:8px;}
+  .rank-msg{text-align:center;color:var(--muted);margin-top:6px;font-size:.9rem;line-height:1.6;}
+  .review{margin-top:16px;}
+  /* ---------- effects ---------- */
+  .fx{position:fixed;top:-40px;font-size:1.6rem;z-index:99;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+  .dancer{
+    position:fixed;bottom:10px;font-size:3rem;z-index:98;pointer-events:none;
+    animation:ride 3.2s linear forwards;
+  }
+  @keyframes ride{
+    0%{left:-10%;transform:scaleX(1) translateY(0);}
+    24%{transform:scaleX(1) translateY(-14px);}
+    49%{transform:scaleX(1) translateY(0);}
+    50%{left:48%;transform:scaleX(1) translateY(-14px);}
+    99%{transform:scaleX(1) translateY(0);}
+    100%{left:110%;transform:scaleX(1) translateY(0);}
+  }
+  .toast{
+    position:fixed;top:16%;left:50%;transform:translateX(-50%) scale(.6);opacity:0;
+    background:linear-gradient(90deg,var(--purple2),var(--pink));color:#fff;font-weight:900;
+    padding:12px 26px;border-radius:999px;font-size:1.25rem;z-index:100;pointer-events:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);transition:.25s;white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) scale(1);}
+  footer{margin-top:40px;text-align:center;color:#8674c9;font-size:.72rem;line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">PHRASE STAGE</div>
+    <div class="tagline">英熟語 Vintage 1051–1113 完全攻略ステージ 🎤</div>
+    <div class="lightsticks">💜 🕺 💜 🎶 💜</div>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <section id="home">
+    <div class="card">
+      <h2>🎯 出題範囲をえらぶ</h2>
+      <div class="chips" id="catChips"></div>
+      <div style="margin-top:14px;" class="chips" id="numChips">
+        <button class="chip on" data-n="10">10問</button>
+        <button class="chip" data-n="20">20問</button>
+        <button class="chip" data-n="all">ぜんぶ</button>
+      </div>
+      <div class="note-line" id="poolInfo" style="text-align:left;margin-top:10px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎬 ステージをえらぶ</h2>
+      <div class="modes">
+        <button class="mode-btn" data-mode="e2j">
+          <span class="mi">🇬🇧→🇯🇵</span><span class="mt">英語 → 日本語 4択</span>
+          <span class="md">英語フレーズの意味を当てよう</span>
+        </button>
+        <button class="mode-btn" data-mode="j2e">
+          <span class="mi">🇯🇵→🇬🇧</span><span class="mt">日本語 → 英語 4択</span>
+          <span class="md">意味から英語フレーズを当てよう</span>
+        </button>
+        <button class="mode-btn" data-mode="type">
+          <span class="mi">⌨️</span><span class="mt">タイピング</span>
+          <span class="md">英語フレーズを打ち込もう(最難関!)</span>
+        </button>
+        <button class="mode-btn" data-mode="list">
+          <span class="mi">📖🔊</span><span class="mt">フレーズリスト</span>
+          <span class="md">音声つき一覧でチェック</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="bestCard">
+      <h2>🏆 ベストスコア</h2>
+      <div id="bestScores" style="font-size:.85rem;color:var(--muted);line-height:2;"></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ (e2j / j2e) ============ -->
+  <section id="quiz" class="hidden">
+    <div class="hud">
+      <span id="qProg"></span>
+      <span class="combo-box" id="qCombo"></span>
+      <span id="qScore"></span>
+    </div>
+    <div class="bar"><i id="qBar"></i></div>
+    <div class="card">
+      <div class="q-word" id="qWord"></div>
+      <div class="q-sub" id="qSub"></div>
+      <div class="opts" id="qOpts"></div>
+      <div class="feedback" id="qFb"></div>
+      <div class="note-line" id="qNote"></div>
+      <div class="center" style="margin-top:14px;">
+        <button class="btn hidden" id="qNext">つぎへ ➡️</button>
+      </div>
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <button class="btn ghost small" onclick="goHome()">🏠 ホームにもどる</button>
+    </div>
+  </section>
+
+  <!-- ============ TYPING ============ -->
+  <section id="typing" class="hidden">
+    <div class="hud">
+      <span id="tProg"></span>
+      <span class="combo-box" id="tCombo"></span>
+      <span id="tScore"></span>
+    </div>
+    <div class="bar"><i id="tBar"></i></div>
+    <div class="card">
+      <div class="q-word" id="tWord"></div>
+      <div class="q-sub">↑ この意味の英語フレーズをタイプ!(大文字小文字はOK、A/Bは省略してもOK)</div>
+      <input class="type-input" id="tInput" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに英語を入力してEnter">
+      <div class="feedback" id="tFb"></div>
+      <div class="note-line" id="tNote"></div>
+      <div class="type-actions">
+        <button class="btn small ghost" id="tHint">💡 ヒント(頭文字)</button>
+        <button class="btn small" id="tCheck">答え合わせ</button>
+        <button class="btn small hidden" id="tNext">つぎへ ➡️</button>
+      </div>
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <button class="btn ghost small" onclick="goHome()">🏠 ホームにもどる</button>
+    </div>
+  </section>
+
+  <!-- ============ LIST ============ -->
+  <section id="list" class="hidden">
+    <div class="card">
+      <h2>📖 フレーズリスト <span style="font-size:.75rem;color:var(--muted);">🔊ボタンで発音が聞けるよ</span></h2>
+      <input class="search" id="listSearch" placeholder="🔍 検索(英語でも日本語でもOK)">
+      <div id="listBody"></div>
+    </div>
+    <div class="center" style="margin-top:14px;">
+      <button class="btn ghost small" onclick="goHome()">🏠 ホームにもどる</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="result" class="hidden">
+    <div class="card">
+      <div class="score-big" id="rScore"></div>
+      <div class="rank" id="rRank"></div>
+      <div class="rank-msg" id="rMsg"></div>
+      <div class="center" style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn" id="rRetry">🔁 もう一回</button>
+        <button class="btn ghost" onclick="goHome()">🏠 ホーム</button>
+      </div>
+      <div class="review" id="rReview"></div>
+    </div>
+  </section>
+
+  <footer>
+    PHRASE STAGE 💜 — Vintage 英熟語 1051–1113(+その他の重要イディオム)<br>
+    Made with 💜 for KUTSUKO English
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+const CATS = {
+  v1:"動詞イディオム① (1051–1065)",
+  v2:"動詞イディオム② (その他)",
+  a1:"be+形容詞+前置詞 (1066–1090)",
+  p1:"be+過去分詞+前置詞 (1091–1099)",
+  td:"be+形/過分+to do (1100–1107)",
+  ot:"副詞などその他 (1108–1113)"
+};
+const P = [
+ {id:"1051",en:"make much of A",ja:"Aを重視する",cat:"v1",n:"⇔ make light[little] of A「Aを軽視する」"},
+ {id:"1052",en:"think much of A",ja:"Aを重視する",cat:"v1",n:"= think highly of A ／ ⇔ think little of A"},
+ {id:"1053",en:"think better of A",ja:"Aを考え直す",cat:"v1",n:"= have second thought(s) about A"},
+ {id:"1054",en:"behave oneself",ja:"行儀よくする",cat:"v1"},
+ {id:"1055",en:"what ... do with A",ja:"Aをどう処理するか/扱うか",cat:"v1",n:"疑問詞+to不定詞の形に注意",tt:["what to do with","do with","what do with"]},
+ {id:"1056",en:"see (to it) that ...",ja:"…するように取り計らう",cat:"v1",tt:["see to it that","see that","see to it"]},
+ {id:"1057",en:"make sure that ...",ja:"…を確かめる",cat:"v1",n:"make sure of A も同じ意味",tt:["make sure that","make sure","make sure of"]},
+ {id:"1058",en:"leave much to be desired",ja:"改善の余地がかなりある",cat:"v1",n:"⇔ leave nothing to be desired「申し分ない」"},
+ {id:"1059",en:"bring [drive] A home to B",ja:"AのことをBにしみじみわからせる",cat:"v1",n:"come home to A「Aにしみじみわかる」も一緒に"},
+ {id:"1060",en:"see much of A",ja:"Aによく会う",cat:"v1",n:"通例、疑問文・否定文で使う"},
+ {id:"1061",en:"keep on doing",ja:"…し続ける",cat:"v1",n:"= continue doing",tt:["keep on doing","keep on"]},
+ {id:"1062",en:"make believe that ...",ja:"…のふりをする",cat:"v1",n:"= pretend that ...",tt:["make believe that","make believe"]},
+ {id:"1063",en:"avail oneself of A",ja:"Aを利用する",cat:"v1",n:"= take advantage of A ／ make use of A"},
+ {id:"1064",en:"hold good",ja:"有効である",cat:"v1",n:"= be valid"},
+ {id:"1065",en:"make the most of A",ja:"Aを最大限に利用する",cat:"v1",n:"cf. make the best of A「(不利な状況)を精一杯利用する」"},
+ {id:"+",en:"appeal to A",ja:"Aに訴える/Aの気をひく",cat:"v2"},
+ {id:"+",en:"hand over A / hand A over",ja:"Aを手渡す",cat:"v2"},
+ {id:"+",en:"head for A",ja:"Aに向かって(まっすぐ)進む",cat:"v2"},
+ {id:"+",en:"make up A / make A up",ja:"Aをでっちあげる",cat:"v2"},
+ {id:"+",en:"meet with A",ja:"Aに遭遇する/偶然会う",cat:"v2"},
+ {id:"+",en:"resort to A",ja:"Aに訴える/頼る",cat:"v2"},
+ {id:"+",en:"catch on",ja:"流行する",cat:"v2"},
+ {id:"+",en:"die out",ja:"(家系・種族などが)絶滅する",cat:"v2"},
+ {id:"+",en:"leave A to B",ja:"AをBに任せる",cat:"v2"},
+ {id:"+",en:"substitute A for B",ja:"AをBの代わりに用いる",cat:"v2"},
+ {id:"+",en:"suspect A of B",ja:"AにBの嫌疑をかける",cat:"v2"},
+ {id:"+",en:"pay attention to A",ja:"Aに注意を向ける",cat:"v2"},
+ {id:"+",en:"call for A",ja:"Aを必要とする",cat:"v2"},
+ {id:"+",en:"let go of A",ja:"Aから手を放す",cat:"v2"},
+ {id:"+",en:"speak out",ja:"意見を言う",cat:"v2"},
+ {id:"+",en:"tell off A / tell A off",ja:"Aをしかる",cat:"v2"},
+ {id:"+",en:"fall out with A",ja:"Aと仲たがいする",cat:"v2"},
+ {id:"1066",en:"be fond of A",ja:"Aが好きである",cat:"a1",n:"= like A"},
+ {id:"1067",en:"be responsible for A",ja:"Aに対して責任がある/Aが原因である",cat:"a1",n:"= answer for A"},
+ {id:"1068",en:"be ignorant of A",ja:"Aを知らない",cat:"a1"},
+ {id:"1069",en:"be free from [of] A",ja:"Aがない",cat:"a1"},
+ {id:"1070",en:"be familiar to A",ja:"Aによく知られている",cat:"a1",n:"to=「人に」知られている"},
+ {id:"1071",en:"be familiar with A",ja:"Aをよく知っている",cat:"a1",n:"with=「物事を」よく知っている"},
+ {id:"1072",en:"be similar to A",ja:"Aに似ている",cat:"a1"},
+ {id:"1073",en:"be anxious about A",ja:"Aを心配している",cat:"a1"},
+ {id:"1074",en:"be anxious for A",ja:"Aを切望する",cat:"a1",n:"= long for A ／ be eager for A"},
+ {id:"1075",en:"be sick of A",ja:"Aにうんざりしている",cat:"a1",n:"= be tired of A ／ be weary of A ／ be fed up with A"},
+ {id:"1076",en:"be popular with [among] A",ja:"Aに人気がある",cat:"a1"},
+ {id:"1077",en:"be rich in A",ja:"Aに富んでいる/恵まれている",cat:"a1",n:"⇔ be poor in A「Aに乏しい」"},
+ {id:"1078",en:"be keen on A",ja:"Aに熱中している",cat:"a1"},
+ {id:"1079",en:"be true to A",ja:"Aに忠実である",cat:"a1",n:"be true of A「Aに当てはまる」も頻出"},
+ {id:"1080",en:"be short of A",ja:"Aが不足している",cat:"a1"},
+ {id:"1081",en:"be lacking in A",ja:"Aを欠いている",cat:"a1"},
+ {id:"1082",en:"be equal to A",ja:"(人・能力などが)Aに耐えられる/匹敵する",cat:"a1"},
+ {id:"1083",en:"be subject to A",ja:"Aを受けやすい/Aに従属している",cat:"a1"},
+ {id:"1084",en:"be afraid of A",ja:"Aを恐れている/心配している",cat:"a1"},
+ {id:"1085",en:"be aware of A",ja:"Aに気づいている",cat:"a1",n:"= be conscious of A"},
+ {id:"1086",en:"be dependent on [upon] A",ja:"Aに頼る/Aしだいである",cat:"a1",n:"⇔ be independent of A"},
+ {id:"1087",en:"be ashamed of A",ja:"Aを恥じている",cat:"a1"},
+ {id:"1088",en:"be conscious of A",ja:"Aに気づいている",cat:"a1",n:"= be aware of A"},
+ {id:"1089",en:"be jealous of A",ja:"Aをねたんでいる",cat:"a1",n:"≒ be envious of A「Aをうらやんでいる」"},
+ {id:"1090",en:"be suitable for A",ja:"Aに適している",cat:"a1"},
+ {id:"1091",en:"be acquainted with A",ja:"Aと知り合いである/Aをよく知っている",cat:"p1"},
+ {id:"1092",en:"A be confronted with B",ja:"A(人)はB(困難など)に直面する",cat:"p1"},
+ {id:"1093",en:"be absorbed in A",ja:"Aに没頭している",cat:"p1"},
+ {id:"1094",en:"be lost in A",ja:"Aに夢中になる/Aに没頭している",cat:"p1",n:"= lose oneself in A ／ be absorbed in A"},
+ {id:"1095",en:"be based on [upon] A",ja:"Aに基づいている",cat:"p1"},
+ {id:"1096",en:"be concerned about A",ja:"Aを心配する/気にする",cat:"p1",n:"be concerned with A「Aに関係する/関心がある」も重要"},
+ {id:"1097",en:"be opposed to A",ja:"Aに反対している",cat:"p1",n:"be opposite to A「Aとは正反対である」"},
+ {id:"1098",en:"be known to A",ja:"A(人)によく知られている",cat:"p1",n:"be known for A「Aで有名」/ be known as A「Aで通っている」"},
+ {id:"1099",en:"be fed up with A",ja:"Aに飽き飽きしている",cat:"p1",n:"= be tired of A ／ be sick of A ／ be weary of A"},
+ {id:"1100",en:"be reluctant to do",ja:"…することに気が進まない",cat:"td",n:"= be unwilling to do",tt:["be reluctant to do","be reluctant to","be reluctant"]},
+ {id:"1101",en:"be apt to do",ja:"…しがちである",cat:"td",n:"= tend to do ／ be liable to do",tt:["be apt to do","be apt to","be apt"]},
+ {id:"1102",en:"be free to do",ja:"自由に…できる",cat:"td",tt:["be free to do","be free to"]},
+ {id:"1103",en:"be eager to do",ja:"…したがっている",cat:"td",n:"be eager for A「Aを切望する」も重要",tt:["be eager to do","be eager to","be eager"]},
+ {id:"1104",en:"be anxious to do",ja:"…したがっている",cat:"td",n:"= be eager to do",tt:["be anxious to do","be anxious to"]},
+ {id:"1105",en:"be supposed to do",ja:"…することになっている/…してください",cat:"td",tt:["be supposed to do","be supposed to"]},
+ {id:"1106",en:"be willing to do",ja:"…する気がある/…するのをいとわない",cat:"td",n:"⇔ be reluctant to do",tt:["be willing to do","be willing to"]},
+ {id:"1107",en:"be bound to do",ja:"必ず…する",cat:"td",n:"= be sure to do ／ be bound for A「A行きである」",tt:["be bound to do","be bound to"]},
+ {id:"1108",en:"right away",ja:"すぐに",cat:"ot",n:"= at once ／ right now"},
+ {id:"1109",en:"(every) now and then [again]",ja:"ときどき",cat:"ot",n:"= from time to time ／ at times ／ on occasion ／ once in a while"},
+ {id:"1110",en:"off and on / on and off",ja:"断続的に/不規則に",cat:"ot"},
+ {id:"1111",en:"by and large",ja:"概して/大体のところ",cat:"ot",n:"= as a rule ／ on the whole"},
+ {id:"1112",en:"as yet",ja:"今までのところ",cat:"ot",n:"通例、否定文で ／ = so far"},
+ {id:"1113",en:"let alone A",ja:"Aは言うまでもなく",cat:"ot",n:"通例、否定文の後で使う"}
+];
+
+/* ================= UTILS ================= */
+const $ = s => document.querySelector(s);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return this._m && this._m[k]; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ (this._m=this._m||{})[k]=v; } }
+};
+
+/* speech */
+let voices=[];
+function loadVoices(){ voices = speechSynthesis ? speechSynthesis.getVoices() : []; }
+if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function speak(text, btn){
+  if(!("speechSynthesis" in window)){ showToast("この端末は音声非対応みたい…🙏"); return; }
+  speechSynthesis.cancel();
+  const clean = text.replace(/\[[^\]]*\]/g,"").replace(/\([^)]*\)/g,"").split("/")[0]
+                    .replace(/\.\.\./g,"").replace(/\s+/g," ").trim();
+  const u = new SpeechSynthesisUtterance(clean);
+  u.lang = "en-US"; u.rate = 0.92;
+  const v = voices.find(v=>/en[-_]US/i.test(v.lang) && /female|samantha|aria|jenny|zira/i.test(v.name)) || voices.find(v=>/en[-_]US/i.test(v.lang)) || voices.find(v=>/^en/i.test(v.lang));
+  if(v) u.voice = v;
+  if(btn){ btn.classList.add("playing"); u.onend = u.onerror = ()=>btn.classList.remove("playing"); }
+  speechSynthesis.speak(u);
+}
+
+/* sounds (WebAudio) */
+let AC=null;
+function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return AC; }
+function tone(freq, t0, dur, type="sine", gain=0.12){
+  const c=ac(); if(!c) return;
+  const o=c.createOscillator(), g=c.createGain();
+  o.type=type; o.frequency.value=freq;
+  g.gain.setValueAtTime(gain, c.currentTime+t0);
+  g.gain.exponentialRampToValueAtTime(0.001, c.currentTime+t0+dur);
+  o.connect(g).connect(c.destination);
+  o.start(c.currentTime+t0); o.stop(c.currentTime+t0+dur+0.05);
+}
+function sndOK(combo){
+  tone(660,0,.12); tone(880,.09,.12); if(combo>=3) tone(1174,.18,.16,"sine",.1); if(combo>=5) tone(1568,.27,.2,"sine",.09);
+}
+function sndNG(){ tone(196,0,.25,"sawtooth",.08); tone(147,.1,.3,"sawtooth",.07); }
+function sndFanfare(){ [523,659,784,1047].forEach((f,i)=>tone(f,i*.13,.25)); tone(1319,.55,.5); }
+
+/* effects */
+function rain(emojis, count=24){
+  for(let i=0;i<count;i++){
+    const s=document.createElement("span");
+    s.className="fx"; s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=(2.2+Math.random()*2.2)+"s";
+    s.style.fontSize=(1.1+Math.random()*1.4)+"rem";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),5000);
+  }
+}
+function horseDance(){
+  const d=document.createElement("div");
+  d.className="dancer"; d.textContent="🕺🐎";
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),3400);
+}
+let toastTimer=null;
+function showToast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),1500);
+}
+const CHEERS=["Daebak! 대박🔥","Jjang! 짱👍","Perfect~! 💜","いいね!その調子🎶","Nice! 나이스✨","天才かも!?🌟"];
+function comboFx(combo){
+  if(combo===3){ showToast("🔥 3 COMBO! いい流れ!"); rain(["🔥","💜"],14); }
+  else if(combo===5){ showToast("💜 5 COMBO! Borahae~!"); rain(["💜","💟","🟣"],20); }
+  else if(combo===7){ showToast("🕺 7 COMBO! Oppa Gangnam Style!"); horseDance(); rain(["🕺","🎶","🐎"],16); }
+  else if(combo===10){ showToast("🧨 10 COMBO! DYNAMITE!!"); rain(["🧨","💥","✨","💜"],34); horseDance(); }
+  else if(combo>10 && combo%5===0){ showToast(`👑 ${combo} COMBO! 世界レベル!`); rain(["👑","✨","💜"],20); }
+}
+
+/* typing normalize */
+function norm(s){
+  return s.toLowerCase()
+    .replace(/[’']/g,"")
+    .replace(/[.,!?"「」…]/g,"")
+    .replace(/\.\.\./g," ")
+    .replace(/[^a-z\s]/g," ")
+    .replace(/\b[ab]\b/g," ")
+    .replace(/\s+/g," ").trim();
+}
+function expandEn(en){
+  let forms = en.split("/").map(x=>x.trim());
+  let out=[];
+  forms.forEach(f=>{
+    let base=[f];
+    // (x) optional
+    base = base.flatMap(s=>{
+      if(/\([^)]*\)/.test(s)) return [s.replace(/\(([^)]*)\)/g,"$1"), s.replace(/\([^)]*\)/g,"")];
+      return [s];
+    });
+    // [x] alternative for preceding word
+    base = base.flatMap(s=>{
+      const m = s.match(/(\S+)\s*\[([^\]]+)\]/);
+      if(m) return [s.replace(/\s*\[[^\]]+\]/,""), s.replace(/(\S+)\s*\[([^\]]+)\]/,"$2")];
+      return [s];
+    });
+    out.push(...base);
+  });
+  return out;
+}
+function accepted(item){
+  const set = new Set();
+  (item.tt || expandEn(item.en)).forEach(x=>set.add(norm(x)));
+  if(!item.tt) expandEn(item.en).forEach(x=>set.add(norm(x)));
+  return [...set].filter(Boolean);
+}
+function isTypedCorrect(input, item){
+  const inps = new Set(expandEn(input).map(norm).filter(Boolean));
+  const plain = norm(input); if(plain) inps.add(plain);
+  if(!inps.size) return false;
+  // accept any phrase sharing the same Japanese meaning (e.g. 1085/1088)
+  const sameJa = P.filter(p=>p.ja===item.ja);
+  return sameJa.some(p=>accepted(p).some(a=>inps.has(a)));
+}
+
+/* ================= STATE ================= */
+let selCats = new Set(Object.keys(CATS));
+let numQ = "10";
+let session = null;
+
+function pool(){ return P.filter(p=>selCats.has(p.cat)); }
+function updatePoolInfo(){
+  $("#poolInfo").textContent = `いま選んでいる範囲:${pool().length}フレーズ`;
+}
+
+/* ================= HOME ================= */
+function buildHome(){
+  const cc=$("#catChips"); cc.innerHTML="";
+  Object.entries(CATS).forEach(([k,v])=>{
+    const b=document.createElement("button");
+    b.className="chip on"; b.textContent=v; b.dataset.cat=k;
+    b.onclick=()=>{
+      if(selCats.has(k) && selCats.size===1){ showToast("最低1つは選んでね💜"); return; }
+      selCats.has(k)?selCats.delete(k):selCats.add(k);
+      b.classList.toggle("on"); updatePoolInfo();
+    };
+    cc.appendChild(b);
+  });
+  $("#numChips").querySelectorAll(".chip").forEach(b=>{
+    b.onclick=()=>{
+      $("#numChips").querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on"); numQ=b.dataset.n;
+    };
+  });
+  document.querySelectorAll(".mode-btn").forEach(b=>{
+    b.onclick=()=>{ ac(); startMode(b.dataset.mode); };
+  });
+  updatePoolInfo(); renderBest();
+}
+function renderBest(){
+  const names={e2j:"英→日 4択",j2e:"日→英 4択",type:"タイピング"};
+  let html="";
+  Object.entries(names).forEach(([k,v])=>{
+    const s=store.get("best_"+k);
+    html+=`${s?"🌟":"⬜"} ${v}: <b>${s?s+"%":"まだ記録なし"}</b><br>`;
+  });
+  $("#bestScores").innerHTML=html;
+}
+function show(id){
+  ["home","quiz","typing","list","result"].forEach(s=>$("#"+s).classList.add("hidden"));
+  $("#"+id).classList.remove("hidden");
+  window.scrollTo({top:0});
+}
+function goHome(){ if(window.speechSynthesis) speechSynthesis.cancel(); show("home"); renderBest(); }
+
+/* ================= SESSION ================= */
+function startMode(mode){
+  if(mode==="list"){ buildList(); show("list"); return; }
+  const p = shuffle(pool());
+  const n = numQ==="all" ? p.length : Math.min(parseInt(numQ), p.length);
+  session = { mode, items:p.slice(0,n), i:0, score:0, combo:0, maxCombo:0, wrong:[], hintUsed:false };
+  if(mode==="type"){ show("typing"); nextType(); } else { show("quiz"); nextQuiz(); }
+}
+function hud(pre){
+  const s=session;
+  $(pre+"Prog").textContent=`Q ${s.i+1} / ${s.items.length}`;
+  $(pre+"Score").textContent=`⭐ ${s.score}`;
+  $(pre+"Combo").textContent=s.combo>=2?`🔥${s.combo} combo`:"";
+  $(pre+"Bar").style.width=(s.i/s.items.length*100)+"%";
+}
+
+/* ================= QUIZ ================= */
+function nextQuiz(){
+  const s=session;
+  if(s.i>=s.items.length){ return finish(); }
+  hud("#q");
+  const item=s.items[s.i];
+  const isE2J = s.mode==="e2j";
+  $("#qWord").textContent = isE2J ? item.en : item.ja;
+  $("#qSub").textContent = isE2J ? (item.id!=="+"?`Vintage ${item.id}`:"") : "この意味の英語フレーズは?";
+  $("#qFb").textContent=""; $("#qNote").textContent="";
+  $("#qNext").classList.add("hidden");
+  if(isE2J) speak(item.en);
+
+  // distractors
+  const key = isE2J ? "ja" : "en";
+  const others = shuffle(P.filter(p=>p!==item && p.ja!==item.ja && (p.cat===item.cat)));
+  const fill = shuffle(P.filter(p=>p!==item && p.ja!==item.ja && p.cat!==item.cat));
+  const ds=[]; const used=new Set([item[key]]);
+  [...others,...fill].forEach(p=>{
+    if(ds.length<3 && !used.has(p[key])){ ds.push(p); used.add(p[key]); }
+  });
+  const opts = shuffle([item,...ds]);
+  const box=$("#qOpts"); box.innerHTML="";
+  opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.textContent=o[key];
+    b.onclick=()=>answerQuiz(b,o===item,item,isE2J);
+    box.appendChild(b);
+  });
+}
+function answerQuiz(btn, ok, item, isE2J){
+  const s=session;
+  document.querySelectorAll("#qOpts .opt").forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===item[isE2J?"ja":"en"]) b.classList.add("correct");
+  });
+  if(ok){
+    s.score++; s.combo++; s.maxCombo=Math.max(s.maxCombo,s.combo);
+    $("#qFb").textContent = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    $("#qFb").style.color="var(--ok)";
+    sndOK(s.combo); comboFx(s.combo);
+  }else{
+    btn.classList.add("wrong");
+    s.combo=0; s.wrong.push(item);
+    $("#qFb").textContent="ドンマイ!💜 正解は → "+item[isE2J?"ja":"en"];
+    $("#qFb").style.color="var(--ng)";
+    sndNG();
+  }
+  if(item.n) $("#qNote").textContent="📝 "+item.n;
+  if(!isE2J) speak(item.en);
+  $("#qCombo").textContent=s.combo>=2?`🔥${s.combo} combo`:"";
+  $("#qScore").textContent=`⭐ ${s.score}`;
+  $("#qNext").classList.remove("hidden");
+  $("#qNext").focus();
+}
+$("#qNext").onclick=()=>{ session.i++; nextQuiz(); };
+
+/* ================= TYPING ================= */
+function nextType(){
+  const s=session;
+  if(s.i>=s.items.length){ return finish(); }
+  hud("#t");
+  const item=s.items[s.i];
+  s.hintUsed=false;
+  $("#tWord").textContent=item.ja;
+  $("#tFb").textContent=""; $("#tNote").textContent="";
+  $("#tInput").value=""; $("#tInput").disabled=false;
+  $("#tNext").classList.add("hidden");
+  $("#tCheck").classList.remove("hidden");
+  $("#tHint").classList.remove("hidden");
+  $("#tInput").focus();
+}
+function checkType(){
+  const s=session; const item=s.items[s.i];
+  const val=$("#tInput").value;
+  if(!val.trim()){ showToast("なにか入力してね✍️"); return; }
+  $("#tInput").disabled=true;
+  $("#tCheck").classList.add("hidden");
+  $("#tHint").classList.add("hidden");
+  const ok=isTypedCorrect(val,item);
+  if(ok){
+    s.score++; s.combo++; s.maxCombo=Math.max(s.maxCombo,s.combo);
+    $("#tFb").textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)]+"  → "+item.en;
+    $("#tFb").style.color="var(--ok)";
+    sndOK(s.combo); comboFx(s.combo);
+  }else{
+    s.combo=0; s.wrong.push(item);
+    $("#tFb").textContent="正解は → "+item.en;
+    $("#tFb").style.color="var(--ng)";
+    sndNG();
+  }
+  if(item.n) $("#tNote").textContent="📝 "+item.n;
+  speak(item.en);
+  $("#tCombo").textContent=s.combo>=2?`🔥${s.combo} combo`:"";
+  $("#tScore").textContent=`⭐ ${s.score}`;
+  $("#tNext").classList.remove("hidden");
+  $("#tNext").focus();
+}
+$("#tCheck").onclick=checkType;
+$("#tInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    if(!$("#tNext").classList.contains("hidden")){ $("#tNext").click(); }
+    else checkType();
+  }
+});
+$("#tHint").onclick=()=>{
+  const item=session.items[session.i];
+  const base=(item.tt?item.tt[0]:expandEn(item.en)[0]).replace(/\s+/g," ").trim();
+  const first=base.split(" ").map(w=>w[0]).join(" ");
+  $("#tNote").textContent="💡 頭文字: "+first.toUpperCase()+"  ("+base.split(" ").length+"語)";
+  session.hintUsed=true;
+};
+$("#tNext").onclick=()=>{ session.i++; nextType(); };
+
+/* ================= RESULT ================= */
+function rank(pct){
+  if(pct===100) return ["👑 Billboard No.1 級!!","PSYもBTSも超えたかも!?完璧なステージでした!Borahae 💜"];
+  if(pct>=85)  return ["✈️ ワールドツアー級!","世界を沸かせるレベル!あと少しで頂点💜"];
+  if(pct>=70)  return ["🏆 音楽番組1位級!","かなりの実力!間違えたフレーズを復習して1位固め!"];
+  if(pct>=50)  return ["🎤 メジャーデビュー級!","デビューおめでとう!ここから伸びるよ🎶"];
+  return ["🌱 練習生(Trainee)","大丈夫、みんな最初は練習生。リストで復習してから再挑戦だ💪"];
+}
+function finish(){
+  const s=session;
+  const pct=Math.round(s.score/s.items.length*100);
+  $("#rScore").textContent=`${s.score} / ${s.items.length}`;
+  const [r,m]=rank(pct);
+  $("#rRank").textContent=r;
+  $("#rMsg").innerHTML=`正答率 <b>${pct}%</b> ／ 最大コンボ <b>${s.maxCombo}</b><br>${m}`;
+  const bk="best_"+s.mode, prev=parseInt(store.get(bk)||"-1");
+  if(pct>prev){ store.set(bk,String(pct)); $("#rMsg").innerHTML+="<br>🎉 ベストスコア更新!"; }
+  const rv=$("#rReview"); rv.innerHTML="";
+  if(s.wrong.length){
+    rv.innerHTML="<h2>📚 まちがえたフレーズ(復習しよう)</h2>";
+    s.wrong.forEach(p=>rv.appendChild(row(p)));
+  }
+  show("result");
+  sndFanfare();
+  if(pct>=70){ rain(["🎉","💜","✨","🎊"],30); }
+  if(pct===100){ horseDance(); setTimeout(()=>rain(["👑","🧨","💜"],30),600); }
+}
+$("#rRetry").onclick=()=>startMode(session.mode);
+
+/* ================= LIST ================= */
+function row(p){
+  const d=document.createElement("div");
+  d.className="p-row";
+  d.innerHTML=`<span class="num">${p.id==="+"?"＋":p.id}</span>
+    <div class="txt"><div class="en"></div><div class="ja"></div>${p.n?'<div class="nt"></div>':""}</div>`;
+  d.querySelector(".en").textContent=p.en;
+  d.querySelector(".ja").textContent=p.ja;
+  if(p.n) d.querySelector(".nt").textContent="📝 "+p.n;
+  const b=document.createElement("button");
+  b.className="speak"; b.textContent="🔊"; b.title="発音を聞く";
+  b.onclick=()=>speak(p.en,b);
+  d.appendChild(b);
+  return d;
+}
+function buildList(){
+  const q=($("#listSearch").value||"").toLowerCase();
+  const body=$("#listBody"); body.innerHTML="";
+  Object.entries(CATS).forEach(([k,name])=>{
+    const items=P.filter(p=>p.cat===k && (
+      !q || p.en.toLowerCase().includes(q) || p.ja.toLowerCase().includes(q) || (p.n||"").toLowerCase().includes(q)
+    ));
+    if(!items.length) return;
+    const h=document.createElement("div");
+    h.className="cat-title"; h.textContent="🎵 "+name;
+    body.appendChild(h);
+    items.forEach(p=>body.appendChild(row(p)));
+  });
+  if(!body.children.length) body.innerHTML='<div style="color:var(--muted);text-align:center;padding:20px;">見つからなかった…別のことばで検索してみて🔍</div>';
+}
+$("#listSearch").addEventListener("input",buildList);
+
+/* ================= INIT ================= */
+buildHome();
+</script>
+</body>
+</html>
