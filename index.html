@@ -139,9 +139,18 @@
   }
   .toast.show{opacity:1;transform:translateX(-50%) scale(1);}
   footer{margin-top:40px;text-align:center;color:#8674c9;font-size:.72rem;line-height:1.8;}
+  .sound-toggle{
+    position:fixed;top:12px;right:12px;z-index:101;
+    border:1.5px solid rgba(167,139,250,.5);background:rgba(18,8,31,.75);color:#fff;
+    border-radius:50%;width:44px;height:44px;font-size:1.15rem;cursor:pointer;
+    backdrop-filter:blur(4px);transition:.15s;
+  }
+  .sound-toggle:hover{transform:scale(1.1);border-color:var(--pink);}
+  .sound-toggle.off{opacity:.6;}
 </style>
 </head>
 <body>
+<button class="sound-toggle" id="sndToggle" title="効果音・自動読み上げのON/OFF">🔊</button>
 <div class="wrap">
 
   <header>
@@ -241,6 +250,9 @@
 
   <!-- ============ LIST ============ -->
   <section id="list" class="hidden">
+    <div class="center" style="margin-top:14px;">
+      <button class="btn ghost small" onclick="goHome()">🏠 ホームにもどる</button>
+    </div>
     <div class="card">
       <h2>📖 フレーズリスト <span style="font-size:.75rem;color:var(--muted);">🔊ボタンで発音が聞けるよ</span></h2>
       <input class="search" id="listSearch" placeholder="🔍 検索(英語でも日本語でもOK)">
@@ -378,7 +390,10 @@ const store = {
 let voices=[];
 function loadVoices(){ voices = speechSynthesis ? speechSynthesis.getVoices() : []; }
 if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+/* sound on/off (🔊ボタンを押した手動再生はミュート中でも鳴る) */
+let soundOn = store.get("sound") !== "0";
 function speak(text, btn){
+  if(!soundOn && !btn) return; // auto-play respects mute
   if(!("speechSynthesis" in window)){ showToast("この端末は音声非対応みたい…🙏"); return; }
   speechSynthesis.cancel();
   const clean = text.replace(/\[[^\]]*\]/g,"").replace(/\([^)]*\)/g,"").split("/")[0]
@@ -395,6 +410,7 @@ function speak(text, btn){
 let AC=null;
 function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return AC; }
 function tone(freq, t0, dur, type="sine", gain=0.12){
+  if(!soundOn) return;
   const c=ac(); if(!c) return;
   const o=c.createOscillator(), g=c.createGain();
   o.type=type; o.frequency.value=freq;
@@ -726,6 +742,21 @@ function buildList(){
   if(!body.children.length) body.innerHTML='<div style="color:var(--muted);text-align:center;padding:20px;">見つからなかった…別のことばで検索してみて🔍</div>';
 }
 $("#listSearch").addEventListener("input",buildList);
+
+/* ================= SOUND TOGGLE ================= */
+function renderSoundBtn(){
+  const b=$("#sndToggle");
+  b.textContent = soundOn ? "🔊" : "🔇";
+  b.classList.toggle("off", !soundOn);
+}
+$("#sndToggle").onclick=()=>{
+  soundOn=!soundOn;
+  store.set("sound", soundOn?"1":"0");
+  if(!soundOn && window.speechSynthesis) speechSynthesis.cancel();
+  renderSoundBtn();
+  showToast(soundOn ? "🔊 音 ON!" : "🔇 音 OFF(🔊ボタンの読み上げだけ鳴るよ)");
+};
+renderSoundBtn();
 
 /* ================= INIT ================= */
 buildHome();
